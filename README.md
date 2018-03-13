@@ -20,5 +20,6 @@ Congratulations! You can now use this popup-based extension by clicking the X ic
 - support MD5, SHA1
 - make other IOC types optional, like email, phone, url, CVE, Bitcoin and others
 - show sum of all IOCs
-- replace `[.]` with `.` or `(.)` with `.`, this helps to make make some bad keywords more convenient to search in X, like `https://www[.]google[.]com`
-- remove IP port
+
+## issues and demands
+- change reg

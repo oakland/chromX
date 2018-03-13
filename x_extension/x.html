@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/main.css">
 	<title>X extension</title>
 </head>
 <body style="min-width: 500px;">
 	<!-- main content -->
-	<input type="text" id="query" placeholder="输入要查询的 IOC">
-	<button>将 [.] 替换为 .</button>
-	<button>将 (.) 替换为 .</button>
-	<button>去掉IP端口号</button>
-	<button id="search">搜索</button>
+	<input type="text" id="query" placeholder="IOC(ip, domain, MD5/SHA1/SHA256)">
+	<button id="search">Search in X</button>
 
+	<hr/>
+	<h2>IOCs on this page</h2>
 	<div id="IndicatorList"></div>
 
 	<!-- scripts -->

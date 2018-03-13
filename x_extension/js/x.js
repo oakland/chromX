@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+  var preUrl = 'https://x.threatbook.cn/query/'
+
+  // search keyword in X platform of threatbook
   var searchBtn = document.getElementById('search');
   var queryInput = document.getElementById('query');
 
@@ -13,18 +16,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }, false);
 
   function queryIocInX() {
-    var query = queryInput.value;
-    var preUrl = 'https://x.threatbook.cn/query/'
+    var query = transformInput(queryInput.value);
     var reqUrl = preUrl + query;
 
     window.open(reqUrl);
   }
+  // replace [.] or (.) with ., for example www[.]google[.]com will be transformed to www.google.com, 10.20.30(.)40 will be transformed to 10.20.30.40
+  function transformInput(str) {
+    var reg = /\[\.\]|\(\.\)/ig;
+    return str.replace(reg, '.');
+  }
+
 }, false);
 
 $(function () {
     chrome.runtime.onMessage.addListener(function (request, sender) {
         if (request.action == "getSource") {
-            var pageText = $(request.source).find('*:not(script):not(style):not(noscript)').text();
+            // var pageText = $(request.source).find('*:not(script):not(style):not(noscript)').text();
+            var pageText = $(request.source).text();
 
             var outputMarkup = '';
 
@@ -42,7 +51,6 @@ $(function () {
             var uniqueDomainEle = uniqueDomain.map((domain, index) => {
                 return `${index + 1}. <a target="_blank" href="https://x.threatbook.cn/query/${domain}">${domain}</a>`
             });
-            console.log(uniqueDomainEle);
             if (uniqueDomain.length > 0) {
                 outputMarkup += `<div><h3>Domains (${uniqueDomainEle.length})</h3>${uniqueDomainEle.join("</br>")}</div>`;
             }
@@ -52,21 +60,35 @@ $(function () {
             var uniqueSha256Ele = uniqueSha256.map((sha256, index) => {
                 return `${index + 1}. <a target="_blank" href="https://x.threatbook.cn/query/${sha256}">${sha256}</a>`
             });
+            var uniqueSha256Ele = uniqueSha256.map((sha256, index) => {
+                return `${index + 1}. <a target="_blank" href="https://x.threatbook.cn/query/${sha256}">${sha256}</a>`
+            });
             if (uniqueSha256.length > 0) {
-                outputMarkup += `<div><h3>SHA-256 Hashes (${uniqueSha256Ele.length})</h3>${uniqueSha256Ele.join("</br>")}</div>`;
+                outputMarkup += `<div><h3>SHA256 (${uniqueSha256Ele.length})</h3>${uniqueSha256Ele.join("</br>")}</div>`;
             }
 
-            // var matchedSha1 = pageText.match(regex.SHA1);
-            // var uniqueSha1 = uniqueFiltered(matchedSha1, []);
-            // if (uniqueSha1.length > 0) {
-            //     outputMarkup += '<h3>SHA-1 Hashes</h3><pre>' + uniqueSha1.join("\n") + '</pre></div>';
-            // }
+            var pageTextAfterSHA256 = pageText.replace(regex.SHA256, 'S-H-A-2-5-6');
 
-            // var matchedMd5 = pageText.match(regex.MD5);
-            // var uniqueMd5 = uniqueFiltered(matchedMd5, []);
-            // if (uniqueMd5.length > 0) {
-            //     outputMarkup += '<h3>MD5 Hashes</h3><pre>' + uniqueMd5.join("\n") + '</pre></div>';
-            // }
+            var matchedSha1 = pageTextAfterSHA256.match(regex.SHA1);
+            // console.log(matchedSha1);
+            var uniqueSha1 = uniqueFiltered(matchedSha1, []);
+            var uniqueSha1Ele = uniqueSha1.map((sha1, index) => {
+                return `${index + 1}. <a target="_blank" href="https://x.threatbook.cn/query/${sha1}">${sha1}</a>`
+            });
+            if (uniqueSha1.length > 0) {
+                outputMarkup += `<div><h3>SHA1 (${uniqueSha1Ele.length})</h3>${uniqueSha1Ele.join("</br>")}</div>`;
+            }
+
+            var pageTextAfterSHA1 = pageTextAfterSHA256.replace(regex.SHA1, 'S-H-A-1');
+
+            var matchedMd5 = pageTextAfterSHA1.match(regex.MD5);
+            var uniqueMd5 = uniqueFiltered(matchedMd5, []);
+            var uniqueMd5Ele = uniqueMd5.map((md5, index) => {
+                return `${index + 1}. <a target="_blank" href="https://x.threatbook.cn/query/${md5}">${md5}</a>`
+            });
+            if (uniqueMd5.length > 0) {
+                outputMarkup += `<div><h3>MD5 (${uniqueMd5Ele.length})</h3>${uniqueMd5Ele.join("</br>")}</div>`;
+            }
 
             // var matchedCve = pageText.match(regex.CVE);
             // var uniqueCve = uniqueFiltered(matchedCve, []);
