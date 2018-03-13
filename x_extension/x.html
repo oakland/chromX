@@ -4,10 +4,22 @@
 	<meta charset="UTF-8">
 	<title>X extension</title>
 </head>
-<body>
+<body style="min-width: 500px;">
 	<!-- main content -->
 	<input type="text" id="query" placeholder="输入要查询的 IOC">
+	<button>将 [.] 替换为 .</button>
+	<button>将 (.) 替换为 .</button>
+	<button>去掉IP端口号</button>
 	<button id="search">搜索</button>
-  <script src="x.js"></script>
+
+	<div id="IndicatorList"></div>
+
+	<!-- scripts -->
+  <script src='js/jquery.min.js'></script>
+  <script src='js/regex_list.js'></script>
+  <script src='js/filter_list.js'></script>
+	<script src='js/tlds_list.js'></script>
+  <script src="js/x.js"></script>
+
 </body>
 </html>
