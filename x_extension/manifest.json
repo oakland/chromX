@@ -1,0 +1,15 @@
+{
+  "name": "X extension",
+  "description" : "Search ip, domain, url or other IOCs in X platform easily",
+  "version": "1.0",
+  "browser_action": {
+    "default_popup": "x.html",
+    "default_icon": "x.png"
+  },
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+    }
+  },
+  "permissions": ["tabs"]
+}
