@@ -28,6 +28,15 @@ function DOMtoString(document_root) {
     return html;
 }
 
+// Parse DOM and put icons next to IOC text ---------
+
+// scripts blow will be executed
+$(document.body).css({
+    backgroundColor: 'orange'
+});
+
+// Parse DOM and put icons next to IOC text ---------
+
 chrome.runtime.sendMessage({
     action: "getSource",
     source: DOMtoString(document)
