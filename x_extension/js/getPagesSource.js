@@ -31,11 +31,16 @@ function DOMtoString(document_root) {
 // Parse DOM and put icons next to IOC text ---------
 
 // scripts blow will be executed
-$(document.body).css({
-    backgroundColor: 'orange'
-});
+// $(document.body).css({
+//     backgroundColor: 'orange'
+// });
 
 // Parse DOM and put icons next to IOC text ---------
+
+// 接收 x.js 发来的消息
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    console.log(msg.testMsg);
+});
 
 chrome.runtime.sendMessage({
     action: "getSource",

@@ -119,6 +119,12 @@ $(function () {
                 IndicatorList.innerText = 'There was an error reading url : \n' + chrome.runtime.lastError.message;
             }
         });
+
+        // 发送消息给 content script
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            var tab = tabs[0];
+            chrome.tabs.sendMessage(tab.id, {testMsg: 'testMsg'}, {}, function() {});
+        });
     }
 
     function uniqueValues(value, index, self) {
