@@ -1,3 +1,5 @@
+# IMPORTANT
+This repo is abandoned. There is an official chrome extension [here](https://chrome.google.com/webstore/detail/threatbook-intelligence-s/mmaealgfcimgjjbiekfjmikfajoopacg). The official extension has more functionality and is powerful than this test extension.
 # chromX
 A chrome extension that can extract IOCs (indicator of compromise) on a web page, and make them easy to search in X platform of [Threatbook](https://x.threatbook.cn).
 
